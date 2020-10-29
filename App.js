@@ -1,21 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from "react";
+import { AppLoading } from "expo";
+import * as Font from "expo-font";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import Routes from "./Routes";
+export default class App extends Component {
+  state = {
+    fontIsLoaded: false
+  };
+  async componentDidMount() {
+    await Font.loadAsync({
+      SemiBold: require("./assets/fonts/Montserrat-SemiBold.otf"),
+      Bold: require("./assets/fonts/Montserrat-Bold.otf"),
+      ExtraBold: require("./assets/fonts/Montserrat-ExtraBold.otf"),
+      Medium: require("./assets/fonts/Montserrat-Medium.otf"),
+      Regular: require("./assets/fonts/Montserrat-Regular.otf")
+    });
+    this.setState({ fontIsLoaded: true });
+  }
+  render() {
+    return this.state.fontIsLoaded === true ? <Routes /> : <AppLoading />;
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
